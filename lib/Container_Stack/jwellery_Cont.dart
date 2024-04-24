@@ -1,15 +1,29 @@
 import 'dart:developer';
 
+import 'package:fashion_world/cartPages/cartGetApi.dart';
 import 'package:fashion_world/cartPages/cartIdGet.dart';
 import 'package:fashion_world/ip.dart';
-import 'package:fashion_world/model/categorizedmodel.dart';
 import 'package:fashion_world/provider/dataModel.dart';
+import 'package:fashion_world/whishList/whishlistApi.dart';
+import 'package:fashion_world/whishList/whishlistIdPass.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class jwelleryStack extends StatelessWidget {
+class jwelleryStack extends StatefulWidget {
   const jwelleryStack({super.key});
+
+  @override
+  State<jwelleryStack> createState() => _jwelleryStackState();
+}
+
+class _jwelleryStackState extends State<jwelleryStack> {
+  void initState() {
+    Provider.of<CartGetCart>(context, listen: false).fetchCart();
+    Provider.of<WhishlistApi>(context, listen: false).whishData();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,16 +77,34 @@ class jwelleryStack extends StatelessWidget {
                                 Positioned(
                                   right: 4.w,
                                   // bottom: 10.h,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      // Add your favorite button functionality here
-                                      print("favorite button");
+                                  child: Consumer<WhishlistIdPass>(
+                                    builder: (BuildContext context,
+                                        WhishlistIdPass value, Widget? child) {
+                                      return IconButton(
+                                        onPressed: () {
+                                          IconButton(
+                                            onPressed: () {
+                                              value.addAndRemove(
+                                                  context, jwellery.id);
+                                              // Add your favorite button functionality here
+                                              print("favorite button");
+                                            },
+                                            icon: Icon(
+                                              Icons.favorite_border_rounded,
+                                              color: Colors.red,
+                                              size: 19.sp,
+                                            ),
+                                          );
+                                          // Add your favorite button functionality here
+                                          print("favorite button");
+                                        },
+                                        icon: Icon(
+                                          Icons.favorite_border_rounded,
+                                          color: Colors.red,
+                                          size: 19.sp,
+                                        ),
+                                      );
                                     },
-                                    icon: Icon(
-                                      Icons.favorite_border_rounded,
-                                      color: Colors.red,
-                                      size: 19.sp,
-                                    ),
                                   ),
                                 ),
                                 Positioned(

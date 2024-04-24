@@ -1,18 +1,19 @@
+// ignore_for_file: prefer_final_fields, unused_import
 
 import 'dart:convert';
 import 'dart:developer';
 import 'package:fashion_world/cartPages/cartGet.dart';
 import 'package:fashion_world/ip.dart';
+import 'package:fashion_world/whishList/wish_listmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WhishlistApi extends ChangeNotifier {
-  Product? bbdd;
-    bool _isLoading = false;
+  WishListmodel? wishListmodel;
+  bool _isLoading = false;
 
   bool get isLoading => _isLoading;
-
 
   Future<void> whishData() async {
     try {
@@ -29,11 +30,12 @@ class WhishlistApi extends ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
+        log("Ansiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
         final jsonData = json.decode(response.body);
         if (jsonData != null && jsonData is Map<String, dynamic>) {
-          bbdd=Product.fromJson(jsonData);
+          wishListmodel = WishListmodel.fromJson(jsonData);
           notifyListeners(); // Notify listeners of the changes
-          log('whishList: $bbdd');
+          log('whishList: $wishListmodel');
         }
       } else {
         log("Failed...whishList: ${response.statusCode}");

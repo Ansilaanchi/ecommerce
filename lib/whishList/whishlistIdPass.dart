@@ -1,5 +1,6 @@
-import 'dart:developer';
+// ignore_for_file: unnecessary_string_interpolations, use_build_context_synchronously, avoid_print, file_names
 
+import 'dart:developer';
 import 'package:fashion_world/ip.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart ' as http;

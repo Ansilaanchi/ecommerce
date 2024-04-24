@@ -1,6 +1,9 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:fashion_world/cartPages/cartUi.dart';
 import 'package:fashion_world/whishList/favouritePage.dart';
 import 'package:fashion_world/provider/dataModel.dart';
+import 'package:fashion_world/whishList/whishlistApi.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -28,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // Provider.of<BottomProvider>(context, listen: false);
     Provider.of<DataProvider>(context, listen: false).fetchData();
+    Provider.of<WhishlistApi>(context, listen: false).whishData();
     super.initState();
   }
 
@@ -99,15 +103,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProfilePage()
-                        //  ProfilePage()
-                        ));
-              },
-              icon: Icon(Icons.notifications))
+          IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
         ],
         elevation: 0,
         backgroundColor: const Color.fromARGB(255, 54, 150, 230),
@@ -125,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                           bottomLeft: Radius.circular(23),
                           bottomRight: Radius.circular(23))),
                   width: MediaQuery.of(context).size.width,
-                  height: 10.h,
+                  height: 12.h,
                 ),
                 Positioned(
                     left: 3.w,
@@ -134,7 +130,6 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),
-                      // ignore: sort_child_properties_last
                       child: TextFormField(
                         decoration: InputDecoration(
                             hintText: "Search",
@@ -157,12 +152,7 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     // ignore: sort_child_properties_last
                     child: IconButton(
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return CartPage();
-                          }));
-                        },
+                        onPressed: () {},
                         icon: Icon(
                           Icons.menu_open_sharp,
                           color: Colors.blue,

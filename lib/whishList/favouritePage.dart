@@ -1,119 +1,106 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:fashion_world/ip.dart';
 import 'package:fashion_world/whishList/whishlistApi.dart';
+import 'package:fashion_world/whishList/whishlistIdPass.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
-// class FavoritePage extends StatefulWidget {
-//   const FavoritePage({super.key});
+class FavoritePage extends StatefulWidget {
+  @override
+  State<FavoritePage> createState() => _FavoritePageState();
+}
 
-//   @override
-//   State<FavoritePage> createState() => _FavoritePageState();
-// }
+class _FavoritePageState extends State<FavoritePage> {
+  @override
+  void initState() {
+    Provider.of<WhishlistApi>(context, listen: false).whishData();
+    super.initState();
+  }
 
-// class _FavoritePageState extends State<FavoritePage> {
-//   @override
-//   void initState() {
-//     Provider.of<WhishlistApi>(context, listen: false).whishData();
-//     // TODO: implement initState
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Consumer<WhishlistApi>(builder: (context, provider, child) {
-//       if (provider.isLoading || provider.bbdd == null) {
-//         // If data is loading or not yet fetched, show loading indicator
-//         return Center(
-//           child: CircularProgressIndicator(),
-          
-//         );
-    
-//       } else {
-//         return
-        
-        
-class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Wishlist'),
-      ),
-      body: Consumer<WhishlistApi>(
-        builder: (context, whishlistApi, child) {
-          if (whishlistApi.isLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (whishlistApi.bbdd == null) {
-            return Center(
-              child: Text('No items in wishlist'),
-            );
-          } else {
-            return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 8.0,
-              ),
-              itemCount: whishlistApi.bbdd!.sId!.length,
-              itemBuilder: (BuildContext context, int index) {
-                final item = whishlistApi.bbdd!.sId.toString();
-                return GridTile(
-                  child: GestureDetector(
-                    onTap: () {
-                      // Handle item tap
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: Colors.grey[200],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.network(
-            'http://$ip:3000/products-images/${whishlistApi.bbdd!.image![index]}',
+        appBar: AppBar(
+          title: Text('Wishlist'),
+        ),
+        body: Consumer<WhishlistApi>(
+          builder: (BuildContext context, value, Widget? child) {
+            if (value.isLoading || value.wishListmodel == null) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              var wishlist = value.wishListmodel!.wishlist;
 
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              whishlistApi.bbdd!.name.toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              '\$${whishlistApi.bbdd!.price.toString()}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+              return GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 4,
+                  crossAxisSpacing: 3,
+                ),
+                itemCount: wishlist!.length,
+                itemBuilder: (context, index) {
+                  // FavoriteItemm item = favoriteItems[index];
+                  var product = wishlist[index].product;
+                  return Container(
+                    height: 15.h,
+                    width: 8.w,
+                    decoration: BoxDecoration(),
+                    child: Stack(
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                          'http://$ip:3000/products-images/${product!.image}',
+                        )))),
+                        Positioned(
+                            right: 3,
+                            child: Consumer<WhishlistIdPass>(
+                              builder: (BuildContext context, idPass,
+                                  Widget? child) {
+                                return IconButton(
+                                    onPressed: () {
+                                      idPass.addAndRemove(context, product.id);
+                                      Provider.of<WhishlistApi>(context,
+                                              listen: false)
+                                          .whishData();
+                                    },
+                                    icon: Icon(Icons.favorite));
+                              },
+                            )),
+                        Positioned(
+                            bottom: 3,
+                            left: 4,
+                            child: Consumer<WhishlistApi>(
+                              builder:
+                                  (BuildContext context, value, Widget? child) {
+                                return Text(
+                                  product.name.toString(),
+                                );
+                              },
+                            )),
+                        // Positioned(
+                        //     bottom: 23,
+                        //     left: 3,
+                        //     child: Consumer<WhishlistApi>(
+                        //       builder: (BuildContext context, WhishlistApi value, Widget? child) {
+                        //         return Text(
+                        //                                         product.category.toString()
+
+                        //       );
+                        //        },
+
+                        //     )),
+                      ],
                     ),
-                  ),
-                  footer: GridTileBar(
-                    backgroundColor: Colors.black45,
-                    title: IconButton(
-                      icon: Icon(Icons.remove_circle),
-                      onPressed: () {
-                        // Handle remove from wishlist
-                      },
-                    ),
-                  ),
-                );
-              },
-            );
-          }
-        },
-      ),
-    );
+                  );
+                },
+              );
+            }
+          },
+        ));
   }
 }

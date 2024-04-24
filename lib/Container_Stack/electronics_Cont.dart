@@ -1,9 +1,13 @@
+// ignore_for_file: avoid_print, sized_box_for_whitespace
+
 import 'dart:developer';
 
 import 'package:fashion_world/cartPages/cartGetApi.dart';
 import 'package:fashion_world/cartPages/cartIdGet.dart';
 import 'package:fashion_world/ip.dart';
 import 'package:fashion_world/provider/dataModel.dart';
+import 'package:fashion_world/whishList/whishlistApi.dart';
+import 'package:fashion_world/whishList/whishlistIdPass.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -19,6 +23,7 @@ class _ElecronicsStackState extends State<ElecronicsStack> {
   @override
   void initState() {
     Provider.of<CartGetCart>(context, listen: false).fetchCart();
+    Provider.of<WhishlistApi>(context, listen: false).whishData();
     // TODO: implement initState
     super.initState();
   }
@@ -75,16 +80,26 @@ class _ElecronicsStackState extends State<ElecronicsStack> {
                                 Positioned(
                                   right: 4.w,
                                   // bottom: 10.h,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      // Add your favorite button functionality here
-                                      print("favorite button");
+                                  child: Consumer<WhishlistIdPass>(
+                                    builder: (BuildContext context,
+                                        WhishlistIdPass value, Widget? child) {
+                                      return IconButton(
+                                        onPressed: () {
+                                          value.addAndRemove(
+                                              context, electronics.id);
+                                          Provider.of<WhishlistApi>(context,
+                                                  listen: false)
+                                              .whishData();
+                                          // Add your favorite button functionality here
+                                          print("favorite button");
+                                        },
+                                        icon: Icon(
+                                          Icons.favorite_border_rounded,
+                                          color: Colors.red,
+                                          size: 19.sp,
+                                        ),
+                                      );
                                     },
-                                    icon: Icon(
-                                      Icons.favorite_border_rounded,
-                                      color: Colors.red,
-                                      size: 19.sp,
-                                    ),
                                   ),
                                 ),
                                 Positioned(
@@ -164,7 +179,6 @@ class _ElecronicsStackState extends State<ElecronicsStack> {
                                   // left: 18.4.w,
                                   child: IconButton(
                                       onPressed: () {
-                                        // ignore: avoid_print
                                         print("star icon");
                                       },
                                       icon: Icon(

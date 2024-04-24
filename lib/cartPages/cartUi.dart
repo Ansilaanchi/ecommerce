@@ -238,20 +238,14 @@ class _CartPageState extends State<CartPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Total Price',
-                            style: TextStyle(color: Colors.green[200]),
+                            'Delivery Charge: 40',
+                            style: TextStyle(color: Colors.white),
                           ),
-
                           const SizedBox(height: 8),
-                          // total price
-                          // Text(
-                          //   '\$${value.calculateTotal()}',
-                          //   style: const TextStyle(
-                          //     fontSize: 18,
-                          //     fontWeight: FontWeight.bold,
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
+                          Text(
+                            'Total price ${value.aabb!.total}',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ],
                       ),
 
