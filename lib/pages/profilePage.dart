@@ -1,15 +1,14 @@
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:fashion_world/cartPages/cartUi.dart';
 import 'package:fashion_world/editProfile/editProfile.dart';
+import 'package:fashion_world/editProfile/imgProvider.dart';
 import 'package:fashion_world/editProfile/profileService.dart';
+import 'package:fashion_world/ordersPages/active.dart';
+import 'package:fashion_world/pages/privacyPolicy.dart';
 import 'package:fashion_world/whishList/favouritePage.dart';
 import 'package:fashion_world/pages/homePage.dart';
 import 'package:fashion_world/provider/bottomProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import '../registerPages/login.dart';
@@ -108,39 +107,31 @@ class _ProfilePageState extends State<ProfilePage> {
           if (value.isloading || value.data == null) {
             // If data is loading or not yet fetched, show loading indicator
             return Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitChasingDots(
+  color: Color.fromARGB(255, 7, 108, 190),
+  size: 50.0,
+  
+),
             );
           } else {
             return Column(children: [
               Stack(
                 children: [
                   Center(
-                    child: CircleAvatar(
-                      radius: 55.sp,
-                      backgroundImage: AssetImage(
-                        'assets/blank-profile-picture-973460_960_720.webp',
-                      ),
+                    child: Consumer<ImgProvider>(
+                      builder: (BuildContext context,  value, Widget? child) {
+                        return  CircleAvatar(
+                        radius: 55.sp,
+                        backgroundImage:
+                        
+                              value.img != null ? FileImage(value.img!) : null,
+                         
+                      );
+                        },
+                      
                     ),
                   ),
-                  Positioned(
-                    right: 120,
-                    bottom: 10,
-                    child: Container(
-                      width: 35,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.white,
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          // showImagePickerOption(context);
-                        },
-                        icon: Icon(Icons.edit),
-                      ),
-                    ),
-                  )
-                ],
+                                 ],
               ),
               SizedBox(
                 height: 20,
@@ -158,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   },
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 80),
               Column(
                 children: [
                   InkWell(
@@ -171,13 +162,21 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: profileRow('Your Profile', Icons.person),
                   ),
                   Divider(),
-                  profileRow('Payment Methods', Icons.payment),
+                  // profileRow('Payment Methods', Icons.payment),
+                  // Divider(),
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ActivePage()));
+                    },
+                    child: profileRow('My Orders', Icons.shop)),
                   Divider(),
-                  profileRow('My Orders', Icons.shop),
-                  Divider(),
-                  profileRow('Settings', Icons.settings),
-                  Divider(),
-                  profileRow('Privacy Policy', Icons.lock),
+                  // profileRow('Settings', Icons.settings),
+                  // Divider(),
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PrivacyPolicyPage()));
+                    },
+                    child: profileRow('Privacy Policy', Icons.lock)),
                   Divider(),
                   InkWell(
                     onTap: () {

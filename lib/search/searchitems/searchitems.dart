@@ -2,7 +2,7 @@ import 'searchitem.dart';
 
 class Searchitems {
   List<Searchitem>? searchitems;
-  
+  Searchitem? data;
 
   Searchitems({this.searchitems});
 

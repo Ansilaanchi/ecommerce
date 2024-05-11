@@ -1,7 +1,10 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:fashion_world/bannerPage/bannerGet.dart';
+import 'package:fashion_world/commonWidget/homeData.dart';
 import 'package:fashion_world/ip.dart';
+import 'package:fashion_world/pages/homePage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -13,6 +16,7 @@ class SwiperPage extends StatefulWidget {
 }
 
 class _SwiperPageState extends State<SwiperPage> {
+  
   @override
   void initState() {
     super.initState();
@@ -29,7 +33,12 @@ class _SwiperPageState extends State<SwiperPage> {
         if (value.isLoading || value.bannerData == null) {
           // If data is loading or not yet fetched, show loading indicator
           return Center(
-            child: CircularProgressIndicator(),
+            child: SpinKitWaveSpinner(
+  color: Color.fromARGB(255, 7, 108, 190),
+  size: 50.0,
+  
+)
+            // child: CircularProgressIndicator(),
           );
         } else {
           return Swiper(

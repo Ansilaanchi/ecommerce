@@ -2,10 +2,12 @@ import 'package:fashion_world/cartPages/cartGetApi.dart';
 import 'package:fashion_world/cartPages/cartIdGet.dart';
 import 'package:fashion_world/checkOut/shippingAddrss.dart';
 import 'package:fashion_world/ip.dart';
+import 'package:fashion_world/ordersPages/myOrders.dart';
 import 'package:fashion_world/whishList/favouritePage.dart';
 import 'package:fashion_world/pages/homePage.dart';
 import 'package:fashion_world/pages/profilePage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -19,7 +21,6 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   void initState() {
     Provider.of<CartGetCart>(context, listen: false).fetchCart();
-
     super.initState();
   }
 
@@ -65,6 +66,16 @@ class _CartPageState extends State<CartPage> {
                       MaterialPageRoute(builder: (context) => FavoritePage()));
                 },
               ),
+               IconButton(
+                icon: const Icon(Icons.track_changes),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+//MyOrders
+                          builder: (context) => MyOrders()));
+                },
+              ),
               IconButton(
                 icon: const Icon(Icons.person),
                 onPressed: () {
@@ -107,48 +118,74 @@ class _CartPageState extends State<CartPage> {
                       final item = value.aabb!.data!.items![index];
                       return Stack(children: [
                         Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Container(
-                            height: 17.h,
+                            height: 20.h,
+                            width: 270.w,
                             decoration: BoxDecoration(
-                              color: Colors.grey[200],
+                              // border: Border.all(),
+                              // color: Color.fromARGB(255, 187, 6, 6),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: ListTile(
-                              leading: Image.network(
-                                'http://$ip:3000/products-images/${item.product!.image}',
-                                height: 36,
-                              ),
-                              title: Text(
-                                item.product?.name ?? '',
-                                style: const TextStyle(fontSize: 18),
-                              ),
-                              subtitle: Text(
-                                '\$${item.product?.price ?? 0}',
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              trailing: Consumer<CartItemPass>(
-                                builder: (BuildContext context,
-                                    CartItemPass value, Widget? child) {
-                                  return IconButton(
-                                    icon: const Icon(Icons.delete),
-                                    onPressed: () {
-                                      value.removeItemFromCart(context,
-                                          item.product!.sId.toString());
-                                      context.read<CartGetCart>().fetchCart();
-                                      Provider.of<CartGetCart>(context,
-                                              listen: false)
-                                          .fetchCart();
-                                    },
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 10.2.h,
-                          right: 7.w,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: 18.h,
+                                  width: 25.w,
+                                  decoration: BoxDecoration(
+                                      // color: Colors.cyan,
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                            'http://$ip:3000/products-images/${item.product!.image}',
+                                          ),
+                                          fit: BoxFit.cover)),
+                                ),
+                                Positioned(
+                                  top: 15,
+                                  left: 120,
+                                  child: Text(
+                                    item.product?.name ?? '',
+                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 40,
+                                  left: 120,
+                                  child: Text(
+                                    item.product!.price.toString(),
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 65,
+                                  left: 120,
+                                  child: Text(
+                                    item.product!.category.toString(),
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                ),
+
+                                Positioned(
+                                  top: 20,
+                                  right: 10,
+                                  child: Consumer<CartItemPass>(
+                                    builder: (BuildContext context, CartItemPass value, Widget? child) {
+                                      return IconButton(
+                                                                  
+                                                         onPressed: () { 
+                                                          value.removeItemFromCart(context, item.product!.sId.toString());
+                                                          }, icon:Icon(Icons.delete, color: Colors.red,) ,
+                                    );
+                                      },
+                                  
+                                  ),
+                                ),
+                                
+
+                     
+                         Positioned(
+                          bottom: 4.h,
+                          right: 2.w,
                           child: Row(
                             children: [
                               Consumer<CartItemPass>(
@@ -168,8 +205,8 @@ class _CartPageState extends State<CartPage> {
                                         borderRadius:
                                             BorderRadius.circular(4.sp),
                                       ),
-                                      width: 6.w,
-                                      height: 3.h,
+                                      width: 5.w,
+                                      height: 4.h,
                                       child: Icon(Icons.remove,
                                           size: 14.sp, color: Colors.black),
                                     ),
@@ -177,7 +214,7 @@ class _CartPageState extends State<CartPage> {
                                 },
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left: 2.w, right: 2.w),
+                                padding: EdgeInsets.only(left: 3.w, right: 3.w),
                                 child: Text(
                                   item.quantity.toString(),
                                   style: TextStyle(
@@ -204,8 +241,8 @@ class _CartPageState extends State<CartPage> {
                                         borderRadius:
                                             BorderRadius.circular(4.sp),
                                       ),
-                                      width: 6.w,
-                                      height: 3.h,
+                                      width: 5.5.w,
+                                      height: 4.h,
                                       child: Icon(Icons.add,
                                           size: 14.sp, color: Colors.white),
                                     ),
@@ -214,12 +251,19 @@ class _CartPageState extends State<CartPage> {
                               ),
                             ],
                           ),
-                        )
+                        ),
+                        
+                              ],
+                            ),
+                          ),
+                        ),
+                      //  Divider()
                       ]);
                     },
                   ),
                 ),
               ),
+
 
               // total amount + pay now
 
@@ -243,6 +287,7 @@ class _CartPageState extends State<CartPage> {
                           ),
                           const SizedBox(height: 8),
                           Text(
+                          
                             'Total price ${value.aabb!.total}',
                             style: TextStyle(color: Colors.white),
                           ),

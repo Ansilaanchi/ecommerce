@@ -9,11 +9,11 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchService {
-  Future<Searchitems> getAll() async {
+  Future<Searchitems> getAllThings(String search) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final token = await pref.getString('token');
     final response = await http.get(
-      Uri.parse('http://${ip}:3000/flutter/products/search?query={searchitem}'),
+      Uri.parse('http://${ip}:3000/flutter/products/search?query=$search'),
       headers: <String, String>{
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',

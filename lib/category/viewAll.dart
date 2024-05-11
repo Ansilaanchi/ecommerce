@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import '../commonWidget/buildUser/buildUser.dart';
+import 'buildUser.dart';
 
 class ViewAll extends StatelessWidget {
   const ViewAll({Key? key});
@@ -16,7 +16,7 @@ class ViewAll extends StatelessWidget {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+                crossAxisCount: 2,
                 childAspectRatio: 1, // Adjust this as needed
                 mainAxisSpacing: 8.0,
                 crossAxisSpacing: 8.0,

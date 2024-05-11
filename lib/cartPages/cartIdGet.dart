@@ -94,7 +94,7 @@ class CartItemPass extends ChangeNotifier {
         notifyListeners();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.blue,
             content: Text('Product deleted from cart'),
           ),
         );

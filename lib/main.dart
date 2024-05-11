@@ -2,6 +2,8 @@ import 'package:fashion_world/bannerPage/bannerGet.dart';
 import 'package:fashion_world/cartPages/cartGetApi.dart';
 import 'package:fashion_world/cartPages/cartIdGet.dart';
 import 'package:fashion_world/checkOut/checkoutApi.dart';
+import 'package:fashion_world/downloadInvoice/invoiceApi.dart';
+import 'package:fashion_world/editProfile/imgProvider.dart';
 import 'package:fashion_world/editProfile/profileService.dart';
 import 'package:fashion_world/pages/homePage.dart';
 import 'package:fashion_world/paymentPages/verifyPaymentProvider.dart';
@@ -9,6 +11,8 @@ import 'package:fashion_world/placeOrder/placeorder/orderCreation.dart';
 import 'package:fashion_world/provider/bottomProvider.dart';
 import 'package:fashion_world/provider/dataModel.dart';
 import 'package:fashion_world/registerPages/login.dart';
+import 'package:fashion_world/search/searchProvider.dart';
+import 'package:fashion_world/trackOrder/OrdersHistoryProvider.dart';
 import 'package:fashion_world/whishList/whishlistApi.dart';
 import 'package:fashion_world/whishList/whishlistIdPass.dart';
 import 'package:flutter/material.dart';
@@ -54,8 +58,12 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => CheckoutApi()),
           ChangeNotifierProvider(create: (_) => OrderCreationProvider()),
           ChangeNotifierProvider(create: (_) => VerifyPaymentProvider()),
+          ChangeNotifierProvider(create: (_) => SearchProvider()),
+          ChangeNotifierProvider(create: (_) => OrdersHistoryProvider()),
+          ChangeNotifierProvider(create: (_) => InvoiceApi()),
+           ChangeNotifierProvider(create: (_) => ImgProvider()),
 
-          //VerifyPaymentProvider
+          //SearchProvider
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -69,3 +77,5 @@ class MyApp extends StatelessWidget {
     });
   }
 }
+
+

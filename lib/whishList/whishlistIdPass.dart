@@ -49,12 +49,12 @@ class WhishlistIdPass extends ChangeNotifier {
       if (response.statusCode == 200) {
         // Notify listeners after adding item to cart
         notifyListeners();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.green,
-            content: Text('whishList add..........'),
-          ),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     backgroundColor: Colors.blue,
+        //     content: Text('whishList add..........'),
+        //   ),
+        // );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

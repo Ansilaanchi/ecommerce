@@ -1,4 +1,4 @@
-import 'package:fashion_world/commonWidget/buildUser/buildUser.dart';
+import 'package:fashion_world/category/buildUser.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -12,7 +12,6 @@ class Category extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          // color: (const Color.fromRGBO(244, 67, 54, 1)),
           width: 100.w,
           height: 10.h,
           child: ListView.builder(

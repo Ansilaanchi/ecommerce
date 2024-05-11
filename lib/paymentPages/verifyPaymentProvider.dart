@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VerifyPaymentProvider extends ChangeNotifier {
-  Future<void> verifyPayment(String paymentId, String orderId, String signature, 
-  String state,
-       BuildContext context) async {
+  Future<void> verifyPayment(String paymentId, String orderId, String signature,
+      String state, BuildContext context) async {
     log("Sending update request...");
     log("paymentId : $paymentId ");
     log("orderId : $orderId");
@@ -29,8 +28,7 @@ class VerifyPaymentProvider extends ChangeNotifier {
           'paymentId': paymentId,
           'orderId': orderId,
           'signature': signature,
-          'orderID' : state,
-
+          'orderID': state,
         },
         headers: <String, String>{
           'Authorization': 'Bearer $token',
@@ -44,16 +42,11 @@ class VerifyPaymentProvider extends ChangeNotifier {
         log("Update successful");
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(backgroundColor: Colors.blue, content: Text("Done"))
-        );
-        Navigator.push(
-          context, 
-          MaterialPageRoute(builder: (context) => VerifyPayment()),
-        );
+            SnackBar(backgroundColor: Colors.blue, content: Text("Done")));
+       
       } else {
         throw Exception(
-          'Failed to update user. Status code: ${response.statusCode}'
-        );
+            'Failed to update user. Status code: ${response.statusCode}');
       }
     } catch (e) {
       log("Error: $e");

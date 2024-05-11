@@ -1,4 +1,4 @@
-import 'package:fashion_world/ordersPages/cancelPage.dart';
+import 'package:fashion_world/ordersPages/leaveReview.dart';
 import 'package:fashion_world/ordersPages/completedPage.dart';
 import 'package:fashion_world/ordersPages/whatsappTab.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class _MyOrdersState extends State<MyOrders> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
           appBar: AppBar(
               backgroundColor: Color.fromARGB(255, 230, 228, 235),
@@ -25,13 +25,7 @@ class _MyOrdersState extends State<MyOrders> {
                 Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
-                      ),
-                    ),
+                  
                     Text(
                       'My Orders',
                       style: TextStyle(
@@ -55,16 +49,16 @@ class _MyOrdersState extends State<MyOrders> {
                         text: 'Completed',
                         style: TextStyle(fontSize: 20),
                       ),
-                      RowTab(
-                        text: 'Cancelled',
-                        style: TextStyle(fontSize: 20),
-                      ),
+                      // RowTab(
+                      //   text: 'Cancelled',
+                      //   style: TextStyle(fontSize: 20),
+                      // ),
                     ]),
               ])),
           body: TabBarView(children: [
             ActivePage(),
             CompletedPage(),
-            CancelPage(),
+            // CancelPage(),
           ])),
     );
 

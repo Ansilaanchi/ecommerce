@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:fashion_world/ip.dart';
 import 'package:fashion_world/whishList/whishlistApi.dart';
 import 'package:fashion_world/whishList/whishlistIdPass.dart';
@@ -37,27 +35,35 @@ class _FavoritePageState extends State<FavoritePage> {
               return GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 3,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
                 ),
                 itemCount: wishlist!.length,
                 itemBuilder: (context, index) {
                   // FavoriteItemm item = favoriteItems[index];
                   var product = wishlist[index].product;
                   return Container(
-                    height: 15.h,
-                    width: 8.w,
-                    decoration: BoxDecoration(),
+                    height: 75.h,
+                    width: 30.w,
+                    decoration: BoxDecoration(
+                                          // color: const Color(0xFF4CAF50),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: const Color.fromARGB(255, 217, 233, 235)
+                      )
+                    ),
                     child: Stack(
                       children: [
                         Container(
+                            height: 15.h,
+                            width: 30.w,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: NetworkImage(
-                          'http://$ip:3000/products-images/${product!.image}',
-                        )))),
+                                      'http://$ip:3000/products-images/${product!.image}',
+                                    ),
+                                    fit: BoxFit.cover))),
                         Positioned(
-                            right: 3,
+                            right: 15,
                             child: Consumer<WhishlistIdPass>(
                               builder: (BuildContext context, idPass,
                                   Widget? child) {
@@ -68,32 +74,26 @@ class _FavoritePageState extends State<FavoritePage> {
                                               listen: false)
                                           .whishData();
                                     },
-                                    icon: Icon(Icons.favorite));
+                                    icon: Icon(Icons.favorite, color: Colors.red,));
                               },
                             )),
                         Positioned(
-                            bottom: 3,
-                            left: 4,
+                            bottom: 38,
+                            left: 5,
                             child: Consumer<WhishlistApi>(
                               builder:
                                   (BuildContext context, value, Widget? child) {
                                 return Text(
                                   product.name.toString(),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 );
                               },
                             )),
-                        // Positioned(
-                        //     bottom: 23,
-                        //     left: 3,
-                        //     child: Consumer<WhishlistApi>(
-                        //       builder: (BuildContext context, WhishlistApi value, Widget? child) {
-                        //         return Text(
-                        //                                         product.category.toString()
-
-                        //       );
-                        //        },
-
-                        //     )),
+                      Positioned(
+                        right: 5,
+                        bottom: 5,
+                        child: IconButton(onPressed: (){}, icon: Icon(Icons.shopping_cart))
+                      ),
                       ],
                     ),
                   );
