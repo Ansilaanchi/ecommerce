@@ -42,7 +42,6 @@ class ShippingAddress extends StatelessWidget {
                 Container(
                   height: 70.h,
                   width: 90.w,
-                  decoration: BoxDecoration(border: Border.all()),
                   child: Column(
                     children: [
                       SizedBox(height: 30),
@@ -224,13 +223,16 @@ class checkoutText extends StatelessWidget {
     return Container(
       height: 8.h,
       width: 80.w,
-      decoration: BoxDecoration(),
+      decoration: BoxDecoration(border: Border.all(),
+      borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: TextFormField(
           controller: controller,
           validator: validator,
           decoration: InputDecoration(
+          
+            border: InputBorder.none,
             hintText: hintText,
             hintStyle: TextStyle(
               color: Colors.grey,

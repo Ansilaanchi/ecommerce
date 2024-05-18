@@ -10,6 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ImgProvider extends ChangeNotifier {
   File? _imageFile;
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
 
   // Getter for the image file named as 'img'
   File? get img => _imageFile;
@@ -67,6 +70,7 @@ class ImgProvider extends ChangeNotifier {
         );
       }
     } catch (e) {
+      log("wertyuiop");
       log("Error: $e");
       showDialog(
         context: context,

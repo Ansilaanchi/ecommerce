@@ -31,9 +31,9 @@ class _PaymentPageState extends State<PaymentPage> {
                 log('amount: $amount');
                 log('id: $orderId');
                 log('receipt:$state');
-        
+
                 log('Order created: $orderModel');
-        
+
                 if (orderProvider.isLoading) {
                   return Center(
                     child: CircularProgressIndicator(),
@@ -42,7 +42,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   return InkWell(
                     onTap: () {
                       log("Razorpay payment initiated");
-        
+
                       // Configure Razorpay options
                       var options = {
                         'key': 'rzp_test_pJw1K1QJDp192x',
@@ -55,7 +55,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           'email': 'rasir239@gmail.com',
                         }
                       };
-        
+
                       Razorpay razorpay = Razorpay();
                       razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
                           handlePaymentErrorResponse);
@@ -68,18 +68,24 @@ class _PaymentPageState extends State<PaymentPage> {
                     child: Center(
                       child: Column(
                         children: [
-                          SizedBox(height: 20.h,),
-                          Container(
-                            height: 50.h,
-                            width: 98.w,
-                            // color: Colors.blue,
-                            child:Image.asset('assets/istockphoto-1224156546-612x612.jpg', fit: BoxFit.cover,) 
+                          SizedBox(
+                            height: 20.h,
                           ),
-                      
-                          Text('Ready to Pay ', style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),)
+                          Container(
+                              height: 50.h,
+                              width: 98.w,
+                              // color: Colors.blue,
+                              child: Image.asset(
+                                'assets/istockphoto-1224156546-612x612.jpg',
+                                fit: BoxFit.cover,
+                              )),
+                          Text(
+                            'Ready to Pay ',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -123,9 +129,9 @@ class _PaymentPageState extends State<PaymentPage> {
       context,
     );
     Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => VerifyPayment()),
-        );
+      context,
+      MaterialPageRoute(builder: (context) => VerifyPayment()),
+    );
     log(response.data.toString());
     // showAlertDialog(
     //     context, "Payment Successful", "Payment ID: ${response.paymentId}");

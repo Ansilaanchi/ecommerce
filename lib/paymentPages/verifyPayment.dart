@@ -78,7 +78,6 @@ class VerifyPayment extends StatelessWidget {
               InkWell(
                 onTap: () {
                   // downloadFile();
-                  // Fetch orderId from OrderCreationProvider
                   var orderId =
                       Provider.of<OrderCreationProvider>(context, listen: false)
                           .orderCreation

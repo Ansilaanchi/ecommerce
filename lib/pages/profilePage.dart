@@ -1,17 +1,14 @@
-import 'package:fashion_world/cartPages/cartUi.dart';
 import 'package:fashion_world/editProfile/editProfile.dart';
 import 'package:fashion_world/editProfile/imgProvider.dart';
 import 'package:fashion_world/editProfile/profileService.dart';
-import 'package:fashion_world/ordersPages/active.dart';
+import 'package:fashion_world/ordersPages/myOrders.dart';
 import 'package:fashion_world/pages/privacyPolicy.dart';
-import 'package:fashion_world/whishList/favouritePage.dart';
-import 'package:fashion_world/pages/homePage.dart';
 import 'package:fashion_world/provider/bottomProvider.dart';
+import 'package:fashion_world/registerPages/logOutProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import '../registerPages/login.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -34,66 +31,10 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //       bottomNavigationBar: Consumer<BottomProvider>(
-        //   builder: (context, provider, child) => CurvedNavigationBar(
-        //     key: provider.navigatorKey,
-        //     index: provider.selectedIndex,
-        //     items: provider.items,
-        //     onTap: provider.onItemTapped,
-        //   ),
-        // ),
-        bottomNavigationBar: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          notchMargin: 5.0,
-          clipBehavior: Clip.antiAlias,
-          child: SizedBox(
-            height: kBottomNavigationBarHeight,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                IconButton(
-                  icon: const Icon(Icons.home),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.shopping_bag),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CartPage()));
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.favorite_border_outlined),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FavoritePage()));
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.person),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ProfilePage()));
-                  },
-                )
-              ],
-            ),
-          ),
-        ),
+       
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (contex) => HomePage()));
-            },
-            icon: Icon(Icons.arrow_back),
-          ),
+          automaticallyImplyLeading: false,
+          
           title: Text(
             'Profile',
             style: TextStyle(
@@ -108,10 +49,9 @@ class _ProfilePageState extends State<ProfilePage> {
             // If data is loading or not yet fetched, show loading indicator
             return Center(
               child: SpinKitChasingDots(
-  color: Color.fromARGB(255, 7, 108, 190),
-  size: 50.0,
-  
-),
+                color: Color.fromARGB(255, 7, 108, 190),
+                size: 50.0,
+              ),
             );
           } else {
             return Column(children: [
@@ -119,36 +59,65 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Center(
                     child: Consumer<ImgProvider>(
-                      builder: (BuildContext context,  value, Widget? child) {
-                        return  CircleAvatar(
-                        radius: 55.sp,
-                        backgroundImage:
-                        
-                              value.img != null ? FileImage(value.img!) : null,
-                         
-                      );
-                        },
-                      
-                    ),
-                  ),
-                                 ],
+                builder: (BuildContext context, imgProvider, Widget? child) {
+                  if (imgProvider.isLoading) {
+                    return CircularProgressIndicator(
+                      strokeAlign: -5,
+                      color: Colors.grey,
+                    );
+                  }
+                  return imgProvider.img != null
+                      ? CircleAvatar(
+                          backgroundImage: FileImage(imgProvider.img!),
+                          radius: 50.sp,
+                        )
+                      : CircleAvatar(
+                          backgroundColor: Colors.white,
+                          backgroundImage:
+                              AssetImage('assets/blank-profile-picture-973460_960_720.webp'),
+                          radius: 50.sp,
+                        );
+                },
+              ),
+            ),
+                ],
               ),
               SizedBox(
                 height: 20,
               ),
-              Consumer<ProfileProvider>(builder:
-                  (BuildContext context, ProfileProvider value, Widget? child) {
-                return Text(value.data.data!.name.toString());
-              }),
-              Positioned(
-                right: 40,
-                top: 80,
-                child: Consumer<ProfileProvider>(
-                  builder: (BuildContext context, value, Widget? child) {
-                    return Text(value.data.data!.phoneno.toString());
-                  },
-                ),
-              ),
+           Consumer<ProfileProvider>(
+              builder: (BuildContext context, profile, Widget? child) {
+                if (profile.isloading) {
+                  return Center(
+                    heightFactor: 0.4.h,
+                    child: CircularProgressIndicator(
+                      strokeAlign: -5,
+                      color: Colors.grey,
+                    ),
+                  );
+                }
+                return Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 3.h),
+                      child: Center(
+                        child: Text(
+                          profile.data.data?.name ?? "",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 17.sp),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    Center(
+                      child: Text(
+                        profile.data.data?.email ?? "",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 8.sp),
+                      ),
+                    ),
               const SizedBox(height: 80),
               Column(
                 children: [
@@ -161,54 +130,71 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     child: profileRow('Your Profile', Icons.person),
                   ),
-                  Divider(),
+
                   // profileRow('Payment Methods', Icons.payment),
                   // Divider(),
                   InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ActivePage()));
-                    },
-                    child: profileRow('My Orders', Icons.shop)),
-                  Divider(),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyOrders()));
+                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>ActivePage()));
+                      },
+                      child: profileRow('My Orders', Icons.shop)),
+
                   // profileRow('Settings', Icons.settings),
                   // Divider(),
                   InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PrivacyPolicyPage()));
-                    },
-                    child: profileRow('Privacy Policy', Icons.lock)),
-                  Divider(),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PrivacyPolicyPage()));
+                      },
+                      child: profileRow('Privacy Policy', Icons.lock)),
+
                   InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
+                       LogOutProvider().logout(context);
                     },
                     child: profileRow('Log Out', Icons.logout),
                   ),
                 ],
               ),
             ]);
-          }
-        })));
+          
+        })]);
+   }} )
+  ));
   }
 }
 
 Padding profileRow(String name, IconData icon) {
   return Padding(
-    padding: const EdgeInsets.only(left: 10),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Icon(icon),
-        Text(
-          name,
-          style: TextStyle(fontSize: 18),
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.arrow_forward_ios_outlined),
-        ),
-      ],
+    padding: const EdgeInsets.all(12.0),
+    child: Container(
+      height: 7.h,
+      width: double.infinity,
+      decoration: BoxDecoration(
+// color: Colors.amber,
+        border: Border.all(),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(icon),
+          Text(
+            name,
+            style: TextStyle(fontSize: 18),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.arrow_forward_ios_outlined),
+          ),
+        ],
+      ),
     ),
   );
 }

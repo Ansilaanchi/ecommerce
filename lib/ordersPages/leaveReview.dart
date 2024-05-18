@@ -1,9 +1,14 @@
 // import 'package:fashion_world/cartPages/cartGetApi.dart';
 import 'package:fashion_world/ip.dart';
-import 'package:fashion_world/pages/homePage.dart';
+import 'package:fashion_world/mainPage.dart';
+import 'package:fashion_world/ordersPages/completedPage.dart';
+import 'package:fashion_world/ordersPages/reviewhive.dart';
+import 'package:fashion_world/ordersPages/viewReview.dart';
 // import 'package:fashion_world/trackOrder/OrdersHistoryProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -25,6 +30,12 @@ class LeaveReview extends StatefulWidget {
 
 class _LeaveReviewState extends State<LeaveReview> {
   var _controller = TextEditingController();
+
+    void _saveReview() async {
+    final box = Hive.box<Review>('reviews');
+    final review = Review(text: _controller.text);
+    await box.add(review);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +73,7 @@ class _LeaveReviewState extends State<LeaveReview> {
                           child: Image.network(
                             'http://$ip:3000/products-images/${widget.productImage}', // Use the passed product image
                             fit: BoxFit.cover,
-                            loadingBuilder:
-                                (context, child, loadingProgress) {
+                            loadingBuilder: (context, child, loadingProgress) {
                               if (loadingProgress == null) return child;
                               return Center(
                                 child: CircularProgressIndicator(
@@ -111,7 +121,7 @@ class _LeaveReviewState extends State<LeaveReview> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomePage(),
+                                builder: (context) => MainPage(),
                               ),
                             );
                           },
@@ -194,7 +204,7 @@ class _LeaveReviewState extends State<LeaveReview> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Container(
-                  height: 20.h,
+                  height: 15.h,
                   width: 200.w,
                   color: Color.fromARGB(255, 240, 233, 233),
                   child: TextField(
@@ -218,10 +228,10 @@ class _LeaveReviewState extends State<LeaveReview> {
                 children: [
                   InkWell(
                     onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: ((context) => CompletedPage(orderIndex:,))));
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => CompletedPage())));
                     },
                     child: Center(
                       child: Container(
@@ -241,12 +251,14 @@ class _LeaveReviewState extends State<LeaveReview> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => HomePage()),
-                        ),
-                      );
+    _saveReview();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ViewReviewPage(),
+                      ),
+                    );               
+                      
                     },
                     child: Center(
                       child: Container(

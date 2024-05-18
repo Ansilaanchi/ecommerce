@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
             MaterialPageRoute(builder: (context) => HomePage()),
           );
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.blue,
             content: Text('Succssfully'),
           ));
         } else {
@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
         print('Request failed with status: ${response.body}.');
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.blue,
           content: Text('Invalid'),
         ));
       }
@@ -127,67 +127,58 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 20,
             ),
-            Container(
-              height: 60,
-              width: 350,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(color: Colors.black),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextFormField(
-                  controller: emailController,
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return 'Please enter your Email';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    suffixIcon: Icon(Icons.email),
-                    hintText: "Enter your Email",
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 15,
+             Container(
+                  height: 60,
+                  width: 350,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Enter your Email",
+                        suffixIcon: Icon(Icons.email),
+                      ),
+                      validator: (input) => !input!.contains('@')
+                          ? 'Please enter a valid email'
+                          : null,
+                      // onSaved: (input) => _email = input!,
                     ),
                   ),
                 ),
-              ),
-            ),
             SizedBox(
               height: 20,
             ),
-            Container(
-              height: 60,
-              width: 350,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(color: Colors.black),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextFormField(
-                  controller: passwordController,
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    suffixIcon: Icon(Icons.lock),
-                    hintText: "Enter your Password",
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 15,
+              Container(
+                  height: 60,
+                  width: 360,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      controller: passwordController,
+
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Enter your Password",
+                        suffixIcon: Icon(Icons.lock)
+                      ),
+                      validator: (input) => input!.length < 6
+                          ? 'Must be at least 6 characters'
+                          : null,
+                      // onSaved: (input) => _password = input!,
+                      obscureText: false,
                     ),
                   ),
                 ),
-              ),
-            ),
             SizedBox(
               height: 20,
             ),

@@ -26,11 +26,13 @@ class _ActivePageState extends State<ActivePage> {
       body: Consumer<OrdersHistoryProvider>(
         builder: (BuildContext context, value, Widget? child) {
           if (value.isloading) {
-      return Center(child: SpinKitWave(
-  color: Color.fromARGB(255, 71, 161, 235),
-  size: 40.0.sp,
-  
-), );          }
+            return Center(
+              child: SpinKitWave(
+                color: Color.fromARGB(255, 71, 161, 235),
+                size: 40.0.sp,
+              ),
+            );
+          }
 
           final orders = value.orderHistory.order ?? [];
 

@@ -33,18 +33,16 @@ class _FasionStackState extends State<FasionStack> {
       if (provider.isLoading || provider.homeData == null) {
         // If data is loading or not yet fetched, show loading indicator
         return Center(
-         child: SpinKitCircle(
-  color: Color.fromARGB(255, 71, 161, 235),
-  size: 35.0.sp,
-  
-),
+          child: SpinKitCircle(
+            color: Color.fromARGB(255, 71, 161, 235),
+            size: 35.0.sp,
+          ),
         );
       } else {
         return SizedBox(
             // Data is available, proceed with building the UI
             width: MediaQuery.of(context).size.width,
-                  height: 30.h,
-            
+            height: 30.h,
             child: ListView.builder(
                 itemCount:
                     provider.homeData?.categorizedProducts?.fasion?.length ?? 0,
@@ -54,7 +52,7 @@ class _FasionStackState extends State<FasionStack> {
                       provider.homeData?.categorizedProducts?.fasion![index];
 
                   return InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return FasionViewPage(
@@ -72,26 +70,29 @@ class _FasionStackState extends State<FasionStack> {
                             Padding(
                               padding: const EdgeInsets.only(left: 11),
                               child: Container(
-                                          height: 28.h,
+                                height: 28.h,
                                 width: 42.w,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Color.fromARGB(255, 235, 230, 230)),
-                                                                    borderRadius: BorderRadius.circular(10),
-                               
+                                  border: Border.all(
+                                      color:
+                                          Color.fromARGB(255, 235, 230, 230)),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Stack(
                                   children: [
                                     Container(
-                                        width: 35.w,
+                                      width: 35.w,
                                       height: 15.h,
                                       decoration: BoxDecoration(
                                         // border: Border.all(
-                                          // color: Colors.grey,
+                                        // color: Colors.grey,
                                         // ),
-                                        borderRadius: BorderRadius.circular(8.0),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(8.0),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                         child: Image.network(
                                           'http://$ip:3000/products-images/${fasion!.image!}',
                                           fit: BoxFit.cover,
@@ -103,7 +104,8 @@ class _FasionStackState extends State<FasionStack> {
                                       // bottom: 10.h,
                                       child: Consumer<WhishlistIdPass>(
                                         builder: (BuildContext context,
-                                            WhishlistIdPass value, Widget? child) {
+                                            WhishlistIdPass value,
+                                            Widget? child) {
                                           return IconButton(
                                             onPressed: () {
                                               value.addAndRemove(
@@ -111,7 +113,7 @@ class _FasionStackState extends State<FasionStack> {
                                               Provider.of<WhishlistApi>(context,
                                                       listen: false)
                                                   .whishData();
-                              
+
                                               // Add your favorite button functionality here
                                               print("favorite button");
                                             },
@@ -134,13 +136,14 @@ class _FasionStackState extends State<FasionStack> {
                                             // color: ColorData.greyColor,
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft: Radius.circular(9),
-                                                bottomRight: Radius.circular(9))),
+                                                bottomRight:
+                                                    Radius.circular(9))),
                                         width: 40.w,
                                         height: 12.h,
                                       ),
                                     ),
                                     Positioned(
-                                         bottom: 65,
+                                      bottom: 65,
                                       left: 8,
                                       child: Text(
                                         fasion.name ?? "",
@@ -151,17 +154,17 @@ class _FasionStackState extends State<FasionStack> {
                                       ),
                                     ),
                                     Positioned(
-                                        bottom: 48,
+                                      bottom: 48,
                                       left: 8,
                                       child: Text(
                                         '\$ ${fasion.price}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: Color.fromARGB(255, 2, 2, 2)),
+                                            color:
+                                                Color.fromARGB(255, 2, 2, 2)),
                                       ),
                                     ),
                                     SizedBox(height: 4.0),
-                                    
                                     Positioned(
                                       right: 3.w,
                                       bottom: 0.h,
@@ -170,17 +173,18 @@ class _FasionStackState extends State<FasionStack> {
                                             // Call the addItemToCart method with the product ID
                                             Provider.of<CartItemPass>(context,
                                                     listen: false)
-                                                .addItemToCart(context, fasion.id);
+                                                .addItemToCart(
+                                                    context, fasion.id);
                                             // ignore: avoid_print
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(SnackBar(
                                               backgroundColor: Colors.blue,
                                               content: Text('Add To Cart'),
-                              
+
                                               // ));                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>CartPage()
                                             ));
                                             log('$CartItemPass');
-                              
+
                                             // AlertDialog(
                                             //   content:Container(
                                             //     height: 180,
@@ -188,7 +192,7 @@ class _FasionStackState extends State<FasionStack> {
                                             //     child: Text('ADD TO CART'),
                                             //   ) ,
                                             // );
-                              
+
                                             // ignore: avoid_print
                                             print("control button");
                                           },
@@ -198,7 +202,6 @@ class _FasionStackState extends State<FasionStack> {
                                             color: Colors.pink,
                                           )),
                                     ),
-                                   
                                   ],
                                 ),
                               ),

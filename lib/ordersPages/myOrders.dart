@@ -19,13 +19,13 @@ class _MyOrdersState extends State<MyOrders> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
+              automaticallyImplyLeading: false,
               backgroundColor: Color.fromARGB(255, 230, 228, 235),
               toolbarHeight: 100,
               title: Column(children: [
                 Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  
                     Text(
                       'My Orders',
                       style: TextStyle(

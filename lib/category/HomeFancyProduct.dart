@@ -37,8 +37,7 @@ class HomeFancyProduct extends StatelessWidget {
                 // crossAxisSpacing: 1
               ),
               itemBuilder: ((context, index) {
-                final fancy = categorizedProducts
-                    ?.fancy![index];
+                final fancy = categorizedProducts?.fancy![index];
                 return InkWell(
                   onTap: () {
                     Navigator.push(context,

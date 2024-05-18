@@ -16,7 +16,6 @@ class SwiperPage extends StatefulWidget {
 }
 
 class _SwiperPageState extends State<SwiperPage> {
-  
   @override
   void initState() {
     super.initState();
@@ -33,13 +32,12 @@ class _SwiperPageState extends State<SwiperPage> {
         if (value.isLoading || value.bannerData == null) {
           // If data is loading or not yet fetched, show loading indicator
           return Center(
-            child: SpinKitWaveSpinner(
-  color: Color.fromARGB(255, 7, 108, 190),
-  size: 50.0,
-  
-)
-            // child: CircularProgressIndicator(),
-          );
+              child: SpinKitWaveSpinner(
+            color: Color.fromARGB(255, 7, 108, 190),
+            size: 50.0,
+          )
+              // child: CircularProgressIndicator(),
+              );
         } else {
           return Swiper(
             loop: true,

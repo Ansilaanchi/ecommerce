@@ -22,7 +22,8 @@ class HomeFancy extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 4.w, top: 2.h, right: 4.w),
             child: CircleAvatar(
-              backgroundImage: AssetImage("assets/images__7_-removebg-preview.png"),
+              backgroundImage:
+                  AssetImage("assets/images__7_-removebg-preview.png"),
               backgroundColor: Colors.grey,
               radius: 25.sp,
               // child: CircleAvatar(

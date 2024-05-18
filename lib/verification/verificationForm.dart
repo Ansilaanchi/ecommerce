@@ -25,7 +25,7 @@ class VerificationForm extends StatelessWidget {
             hintText: '_',
             hintStyle: TextStyle(color: Color.fromARGB(255, 182, 181, 181)),
             border: InputBorder.none),
-        style: Theme.of(context).textTheme.headline6,
+        style: Theme.of(context).textTheme.titleLarge,
         keyboardType: TextInputType.number,
         inputFormatters: [
           LengthLimitingTextInputFormatter(1),

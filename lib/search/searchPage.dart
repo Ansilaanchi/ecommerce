@@ -1,4 +1,5 @@
 import 'package:fashion_world/ip.dart';
+import 'package:fashion_world/search/searchProduct.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fashion_world/search/searchProvider.dart';
@@ -38,8 +39,8 @@ class CustomSearchDelegate extends SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage('assets/istockphoto-1363841854-612x612.jpg'))
-      ),
+          image: DecorationImage(
+              image: AssetImage('assets/istockphoto-1363841854-612x612.jpg'))),
     ); // You can leave this empty since you don't need suggestions
   }
 }
@@ -68,20 +69,21 @@ class SearchPage extends StatelessWidget {
               var product = search.data.searchitems?[index];
               return InkWell(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => SearchProduct(
-                  //       productName: product.name.toString(),
-                  //       productImage: product.image.toString(),
-                  //       productPrice: product.price.toString(),
-                  //       productId: product.id.toString(),
-                  //     ),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchProduct(
+                        productName: product.name.toString(),
+                        productImage: product.image.toString(),
+                        productPrice: product.price.toString(),
+                        productId: product.id.toString(),
+                      ),
+                    ),
+                  );
                 },
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
                   child: Column(
                     children: [
                       Expanded(
@@ -111,7 +113,8 @@ class SearchPage extends StatelessWidget {
                             bottomRight: Radius.circular(6),
                           ),
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 4.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

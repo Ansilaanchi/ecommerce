@@ -1,17 +1,9 @@
-// ignore_for_file: file_names, avoid_print, unused_import, unnecessary_brace_in_string_interps
-import 'package:fashion_world/cartPages/cartGetApi.dart';
-import 'package:fashion_world/cartPages/cartIdGet.dart';
-import 'package:fashion_world/cartPages/cartUi.dart';
-import 'package:fashion_world/ip.dart';
-import 'package:fashion_world/pages/homePage.dart';
-import 'package:fashion_world/placeOrder/placeorder/orderCreation.dart';
-import 'package:fashion_world/provider/favorite.dart';
-import 'package:fashion_world/trackOrder/OrdersHistoryProvider.dart';
-import 'package:fashion_world/whishList/whishlistApi.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:fashion_world/cartPages/cartIdGet.dart';
+import 'package:fashion_world/ip.dart';
+import 'package:fashion_world/pages/homePage.dart';
 
 class JwelleryViewPage extends StatelessWidget {
   final String productName;
@@ -119,22 +111,21 @@ class JwelleryViewPage extends StatelessWidget {
                 height: 55,
                 width: 90.w,
                 child: Consumer<CartItemPass>(
-                  builder: (BuildContext context, provider, Widget? child) {
+                  builder: (BuildContext context, cartItemPass, _) {
                     return ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.blue),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.sp),
                           ),
                         ),
                       ),
                       onPressed: () {
-                        Provider.of<CartItemPass>(context, listen: false)
-                            .addItemToCart(context,productId );
+                        cartItemPass.addItemToCart(context, productId);
                         print("Add to Cart");
-                        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CartPage()));
                       },
                       child: Text(
                         "Add to Cart",

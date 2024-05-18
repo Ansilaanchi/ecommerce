@@ -11,6 +11,7 @@ import 'package:fashion_world/whishList/whishlistApi.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 class ElectronicsPage extends StatelessWidget {
   final String productName;
   final String productImage;
@@ -122,7 +123,8 @@ class ElectronicsPage extends StatelessWidget {
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.blue),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.sp),
                           ),
@@ -130,7 +132,7 @@ class ElectronicsPage extends StatelessWidget {
                       ),
                       onPressed: () {
                         Provider.of<CartItemPass>(context, listen: false)
-                            .addItemToCart(context,productId );
+                            .addItemToCart(context, productId);
                         print("Add to Cart");
                         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CartPage()));
                       },

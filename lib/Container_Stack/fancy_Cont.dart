@@ -41,7 +41,7 @@ class _FancyStackState extends State<FancyStack> {
         return SizedBox(
             // Data is available, proceed with building the UI
             width: MediaQuery.of(context).size.width,
-                  height: 30.h,
+            height: 30.h,
             child: ListView.builder(
                 itemCount:
                     provider.homeData?.categorizedProducts?.fasion?.length ?? 0,

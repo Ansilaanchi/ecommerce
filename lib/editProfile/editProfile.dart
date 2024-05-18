@@ -32,14 +32,15 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         backgroundColor: Colors.blue,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HomePage();
-              }));
-            },
-            icon: Icon(Icons.arrow_back, color: Colors.white)),
+        // leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //         return HomePage();
+        //       }));
+        //     },
+        //     icon: Icon(Icons.arrow_back, color: Colors.white)),
         title: Center(
           widthFactor: 1.8.sp,
           child: Text(
@@ -59,10 +60,9 @@ class _EditProfileState extends State<EditProfile> {
                 padding: EdgeInsets.only(top: 38.h),
                 child: Center(
                   child: SpinKitChasingDots(
-  color: Color.fromARGB(255, 7, 108, 190),
-  size: 50.0,
-  
-),
+                    color: Color.fromARGB(255, 7, 108, 190),
+                    size: 50.0,
+                  ),
                 ),
               );
             }
@@ -196,10 +196,10 @@ class _EditProfileState extends State<EditProfile> {
       if (response.statusCode == 200) {
         log("Update successful");
 
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return ProfilePage();
-        }));
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (context) {
+        //   return ProfilePage();
+        // }));
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.blue,
             content: Text("Profile updated successfully...")));

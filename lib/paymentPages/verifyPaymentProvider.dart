@@ -43,7 +43,6 @@ class VerifyPaymentProvider extends ChangeNotifier {
 
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(backgroundColor: Colors.blue, content: Text("Done")));
-       
       } else {
         throw Exception(
             'Failed to update user. Status code: ${response.statusCode}');

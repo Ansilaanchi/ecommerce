@@ -37,8 +37,7 @@ class HomeFasionProduct extends StatelessWidget {
                 // crossAxisSpacing: 1
               ),
               itemBuilder: ((context, index) {
-                final fasion = categorizedProducts
-                    ?.fasion![index];
+                final fasion = categorizedProducts?.fasion![index];
                 return InkWell(
                   onTap: () {
                     Navigator.push(context,

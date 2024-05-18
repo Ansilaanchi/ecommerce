@@ -44,7 +44,6 @@ class ProfileForm extends StatelessWidget {
                 color: Colors.black),
           ),
         ),
-      
         SizedBox(
           width: 90.w,
           // height: 8.h,
@@ -66,7 +65,6 @@ class ProfileForm extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.grey)),
               fillColor: Colors.white,
               filled: true,
-            
             ),
           ),
         ),

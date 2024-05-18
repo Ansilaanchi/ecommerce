@@ -1,15 +1,14 @@
 // ignore_for_file: sort_child_properties_last, curly_braces_in_flow_control_structures
 
 import 'package:fashion_world/Container_Stack/fancy_Cont.dart';
-import 'package:fashion_world/cartPages/cartUi.dart';
 import 'package:fashion_world/category/homeElectronics.dart';
 import 'package:fashion_world/category/homeFancy.dart';
 import 'package:fashion_world/category/homeFasion.dart';
 import 'package:fashion_world/category/homeJwellery.dart';
-import 'package:fashion_world/ordersPages/myOrders.dart';
+import 'package:fashion_world/lightandDarkTheme/lightAndDark.dart';
+import 'package:fashion_world/model/paginationModel/allProductPage.dart';
 import 'package:fashion_world/search/searchPage.dart';
 import 'package:fashion_world/search/searchProvider.dart';
-import 'package:fashion_world/whishList/favouritePage.dart';
 import 'package:fashion_world/provider/dataModel.dart';
 import 'package:fashion_world/whishList/whishlistApi.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +16,8 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import '../Container_Stack/electronics_Cont.dart';
 import '../Container_Stack/jwellery_Cont.dart';
-import '../category/viewAll.dart';
 import '../swiperPage/swiper.dart';
 import '../Container_Stack/fasionCont.dart';
-import '../category/categories.dart';
-import 'profilePage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -48,69 +44,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //flutter/bottom
-      //  bottomNavigationBar: Consumer<BottomProvider>(
-      //   builder: (context, provider, child) => CurvedNavigationBar(
-      //     key: provider.navigatorKey,
-      //     index: provider.selectedIndex,
-      //     items: provider.items,
-      //     onTap: provider.onItemTapped,
-      //   ),
-      // ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 5.0,
-        clipBehavior: Clip.antiAlias,
-        child: SizedBox(
-          height: kBottomNavigationBarHeight,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.home),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.shopping_bag),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CartPage()));
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.favorite_border_outlined),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => FavoritePage()));
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.track_changes),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-//MyOrders
-                          builder: (context) => MyOrders()));
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.person),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ProfilePage()));
-                },
-              )
-            ],
-          ),
-        ),
-      ),
+      
 
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: InkWell(
           onTap: () {
             // HomeGetData();
@@ -123,11 +60,15 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
-          IconButton(
-              onPressed: () {
-                ///////////////////
-              },
-              icon: Icon(Icons.notifications))
+          Consumer<ThemeProvider>(
+            builder: (BuildContext context, theme, Widget? child) {
+              return Switch(
+                  value: theme.getTheme() == darkMode,
+                  onChanged: (value) {
+                    toggleTheme(context);
+                  });
+            },
+          )
         ],
         elevation: 0,
         backgroundColor: const Color.fromARGB(255, 54, 150, 230),
@@ -156,7 +97,6 @@ class _HomePageState extends State<HomePage> {
                         context: context,
                         delegate: CustomSearchDelegate(),
                       );
-                      //  Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchPage()));
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -199,26 +139,16 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 10,
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 15),
-            //   child: Text(
-            //     '#Special for you',
-            //     style: TextStyle(
-            //       color: const Color.fromARGB(255, 23, 7, 255),
-            //       fontSize: 20,
-            //       fontWeight: FontWeight.bold
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: 10,
-            // ),
+
             Container(
               height: 200,
               width: 300,
               child: SwiperPage(),
             ),
-            SizedBox(height: 20),
+
+            SizedBox(
+              height: 2.h,
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -228,31 +158,27 @@ class _HomePageState extends State<HomePage> {
                     'Categories',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(builder: (context) => ViewAll()),
-                  //     );
-                  //   },
-                  //   child: Text(
-                  //     'View All',
-                  //     style:
-                  //         TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  //   ),
-                  // ),
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductListPage()));
+                    },
+                    child: Text('View All',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15
+                    
+                    ),),
+                  )
                 ],
               ),
             ),
             SizedBox(height: 10),
             Row(
-            children: [
-              HomeElectronics(),
-              HomeFasion(),
-              HomeFancy(),
-              HomeJwellery()
-            ],
-          ),
+              children: [
+                HomeElectronics(),
+                HomeFasion(),
+                HomeFancy(),
+                HomeJwellery()
+              ],
+            ),
             SizedBox(height: 8),
 
             Padding(
@@ -328,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            jwelleryStack(),
+            JwelleryStack(),
             SizedBox(
               height: 20,
             ),

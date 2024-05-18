@@ -1,3 +1,4 @@
+import 'package:fashion_world/AllProducts/paginationApi.dart';
 import 'package:fashion_world/bannerPage/bannerGet.dart';
 import 'package:fashion_world/cartPages/cartGetApi.dart';
 import 'package:fashion_world/cartPages/cartIdGet.dart';
@@ -5,6 +6,9 @@ import 'package:fashion_world/checkOut/checkoutApi.dart';
 import 'package:fashion_world/downloadInvoice/invoiceApi.dart';
 import 'package:fashion_world/editProfile/imgProvider.dart';
 import 'package:fashion_world/editProfile/profileService.dart';
+import 'package:fashion_world/lightandDarkTheme/lightAndDark.dart';
+import 'package:fashion_world/mainPage.dart';
+import 'package:fashion_world/ordersPages/reviewhive.dart';
 import 'package:fashion_world/pages/homePage.dart';
 import 'package:fashion_world/paymentPages/verifyPaymentProvider.dart';
 import 'package:fashion_world/placeOrder/placeorder/orderCreation.dart';
@@ -16,13 +20,19 @@ import 'package:fashion_world/trackOrder/OrdersHistoryProvider.dart';
 import 'package:fashion_world/whishList/whishlistApi.dart';
 import 'package:fashion_world/whishList/whishlistIdPass.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+//  await Hive.initFlutter();
+  // Hive.registerAdapter(ReviewAdapter());
+  // await Hive.openBox<Review>('reviews');
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+  
   bool userlogin = prefs.getBool('userlogin') ?? false;
   runApp(
     MyApp(
@@ -42,6 +52,8 @@ class MyApp extends StatelessWidget {
       return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => DataProvider()),
+          ChangeNotifierProvider(create: (_) => ThemeProvider()),
+          ChangeNotifierProvider(create: (_)=> PaginationDataProvider(),),
           ChangeNotifierProvider(create: (_) => BottomProvider()),
           ChangeNotifierProvider(create: (_) => ProfileProvider()),
           ChangeNotifierProvider(create: (_) => BannerGetData()),
@@ -61,21 +73,19 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => SearchProvider()),
           ChangeNotifierProvider(create: (_) => OrdersHistoryProvider()),
           ChangeNotifierProvider(create: (_) => InvoiceApi()),
-           ChangeNotifierProvider(create: (_) => ImgProvider()),
-
+          ChangeNotifierProvider(create: (_) => ImgProvider()),
           //SearchProvider
         ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-              // textButtonTheme: TextButtonTemeData()
-              ),
-          home: userlogin ? HomePage() : LoginPage(),
-          // home:ProductListScreen(),
+        child: Consumer<ThemeProvider>(
+          builder: (BuildContext context, theme, Widget? child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: theme.getTheme(),
+              home: userlogin ? MainPage() : LoginPage(),
+            );
+          },
         ),
       );
     });
   }
 }
-
-

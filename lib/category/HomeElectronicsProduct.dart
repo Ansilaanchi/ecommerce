@@ -37,8 +37,7 @@ class HomeElectronicsProduct extends StatelessWidget {
                 // crossAxisSpacing: 1
               ),
               itemBuilder: ((context, index) {
-                final electronics = categorizedProducts
-                    ?.electronics![index];
+                final electronics = categorizedProducts?.electronics![index];
                 return InkWell(
                   onTap: () {
                     Navigator.push(context,

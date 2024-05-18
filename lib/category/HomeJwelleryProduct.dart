@@ -38,8 +38,7 @@ class HomeJwelleryProduct extends StatelessWidget {
                 // crossAxisSpacing: 1
               ),
               itemBuilder: ((context, index) {
-                final jwellery = categorizedProducts
-                    ?.jwellery![index];
+                final jwellery = categorizedProducts?.jwellery![index];
                 return InkWell(
                   onTap: () {
                     Navigator.push(context,

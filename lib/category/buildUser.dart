@@ -26,13 +26,11 @@ class User {
   );
 }
 
-
 List user = [
   User(
-    "Fasion",
-    // "assets/Custom-Printed-T-Shirt-Round-Neck.jpg",
-    'assets/fashionable-model-stylish-hat-red-260nw-2035039067.webp'
-  ),
+      "Fasion",
+      // "assets/Custom-Printed-T-Shirt-Round-Neck.jpg",
+      'assets/fashionable-model-stylish-hat-red-260nw-2035039067.webp'),
   User(
     "Electronics",
     "assets/stc501000365_01_1693834881.webp",
@@ -45,5 +43,4 @@ List user = [
     "Fancy",
     "assets/shirt.webp",
   ),
-
-  ];
+];

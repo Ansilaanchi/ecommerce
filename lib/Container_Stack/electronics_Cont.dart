@@ -22,14 +22,14 @@ class ElecronicsStack extends StatefulWidget {
 
 class _ElecronicsStackState extends State<ElecronicsStack> {
   final spinkit = SpinKitFadingCircle(
-  itemBuilder: (BuildContext context, int index) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: index.isEven ? Colors.red : Colors.green,
-      ),
-    );
-  },
-);
+    itemBuilder: (BuildContext context, int index) {
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          color: index.isEven ? Colors.red : Colors.green,
+        ),
+      );
+    },
+  );
 
   @override
   void initState() {
@@ -38,24 +38,22 @@ class _ElecronicsStackState extends State<ElecronicsStack> {
     // TODO: implement initState
     super.initState();
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return Consumer<DataProvider>(builder: (context, provider, child) {
       if (provider.isLoading || provider.homeData == null) {
         // If data is loading or not yet fetched, show loading indicator
-        return Center( 
-          child: SpinKitCircle(
-  color: Color.fromARGB(255, 71, 161, 235),
-  size: 40.0.sp,
-  
-)
-        );
+        return Center(
+            child: SpinKitCircle(
+          color: Color.fromARGB(255, 71, 161, 235),
+          size: 40.0.sp,
+        ));
       } else {
         return SizedBox(
             // Data is available, proceed with building the UI
             width: MediaQuery.of(context).size.width,
-                  height: 30.h,
+            height: 30.h,
             child: ListView.builder(
                 itemCount:
                     provider.homeData?.categorizedProducts?.fasion?.length ?? 0,
@@ -144,7 +142,6 @@ class _ElecronicsStackState extends State<ElecronicsStack> {
                                       top: 18.8.h,
                                       child: Container(
                                         decoration: BoxDecoration(
-                                           
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft: Radius.circular(9),
                                                 bottomRight:
@@ -186,7 +183,7 @@ class _ElecronicsStackState extends State<ElecronicsStack> {
                                                     listen: false)
                                                 .addItemToCart(
                                                     context, electronics.id);
-                                           
+
                                             log('$CartItemPass');
                                           },
                                           icon: Icon(

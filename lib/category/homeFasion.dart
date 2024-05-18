@@ -21,7 +21,8 @@ class HomeFasion extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 4.w, top: 2.h, right: 4.w),
             child: CircleAvatar(
-              backgroundImage: AssetImage("assets/fashionable-model-stylish-hat-red-260nw-2035039067.webp"),
+              backgroundImage: AssetImage(
+                  "assets/fashionable-model-stylish-hat-red-260nw-2035039067.webp"),
               backgroundColor: Colors.grey,
               radius: 25.sp,
               // child: CircleAvatar(

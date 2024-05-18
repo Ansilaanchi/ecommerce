@@ -8,11 +8,12 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class CompletedPage extends StatefulWidget {
-    // final int orderIndex;
+  // final int orderIndex;
 
-  const CompletedPage({Key? key,
-  //  required this.orderIndex
-   });
+  const CompletedPage({
+    Key? key,
+    //  required this.orderIndex
+  });
 
   @override
   State<CompletedPage> createState() => _CompletedPageState();
@@ -31,11 +32,12 @@ class _CompletedPageState extends State<CompletedPage> {
       body: Consumer<OrdersHistoryProvider>(
         builder: (BuildContext context, value, Widget? child) {
           if (value.isloading) {
-            return Center(child: SpinKitWave(
-  color: Color.fromARGB(255, 71, 161, 235),
-  size: 40.0.sp,
-  
-), );
+            return Center(
+              child: SpinKitWave(
+                color: Color.fromARGB(255, 71, 161, 235),
+                size: 40.0.sp,
+              ),
+            );
           }
 
           final orders = value.orderHistory.order ?? [];
@@ -53,18 +55,21 @@ class _CompletedPageState extends State<CompletedPage> {
                 itemBuilder: (context, index) {
                   var product = orders[index].items![0].product;
                   return InkWell(
-                   onTap: () async {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => LeaveReview(
-        productImage: product.image.toString(), // Pass the product image
-        productName: product.name.toString(), // Pass the product name
-        productPrice: product.price.toString(), // Pass the product price
-      ),
-    ),
-  );
-},
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LeaveReview(
+                            productImage: product.image
+                                .toString(), // Pass the product image
+                            productName: product.name
+                                .toString(), // Pass the product name
+                            productPrice: product.price
+                                .toString(), // Pass the product price
+                          ),
+                        ),
+                      );
+                    },
                     child: Container(
                       height: 18.h,
                       width: 300.w,

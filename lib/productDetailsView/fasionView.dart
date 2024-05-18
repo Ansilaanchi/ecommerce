@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-
 class FasionViewPage extends StatelessWidget {
   final String productName;
   final String productImage;
@@ -31,15 +30,8 @@ class FasionViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         backgroundColor: Colors.blue,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return HomePage();
-            }));
-          },
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-        ),
         title: Center(
           widthFactor: 1.5.sp,
           child: Text(
@@ -124,7 +116,8 @@ class FasionViewPage extends StatelessWidget {
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.blue),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.sp),
                           ),
@@ -132,7 +125,7 @@ class FasionViewPage extends StatelessWidget {
                       ),
                       onPressed: () {
                         Provider.of<CartItemPass>(context, listen: false)
-                            .addItemToCart(context,productId );
+                            .addItemToCart(context, productId);
                         print("Add to Cart");
                         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CartPage()));
                       },

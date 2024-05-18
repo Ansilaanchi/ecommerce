@@ -61,8 +61,7 @@ class _TrackOrderState extends State<TrackOrder> {
                           width: 36.w,
                           height: 20.h,
                           decoration: BoxDecoration(
-                            border:
-                                Border.all(width: 1.sp, color: Colors.grey),
+                            border: Border.all(width: 1.sp, color: Colors.grey),
                             borderRadius: BorderRadius.all(Radius.circular(11)),
                             image: DecorationImage(
                               image: NetworkImage(
@@ -207,18 +206,18 @@ class _TrackOrderState extends State<TrackOrder> {
                       //////////////////////////////////////////////////////////////////////////////////////
                       // invoice.addOrderID(widget.orderID);
                       // invoice.initializeNotifications();
-  var orderId =
-                      Provider.of<OrderCreationProvider>(context, listen: false)
+                      var orderId = Provider.of<OrderCreationProvider>(context,
+                              listen: false)
                           .orderCreation
                           ?.order
                           ?.id;
-                  if (orderId != null) {
-                    Provider.of<InvoiceApi>(context, listen: false)
-                        .addOrderID(orderId);
-                  } else {
-                    // If orderId is null, show a message or handle the error
-                    print('Error: Order ID is null');
-                  }
+                      if (orderId != null) {
+                        Provider.of<InvoiceApi>(context, listen: false)
+                            .addOrderID(orderId);
+                      } else {
+                        // If orderId is null, show a message or handle the error
+                        print('Error: Order ID is null');
+                      }
                     },
                     child: SizedBox(
                       height: 5.h,

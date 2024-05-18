@@ -26,75 +26,24 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _refresh() {
+      return Future.delayed(Duration(seconds: 1)).then((_) {
+      });
+    }
+
     return Scaffold(
-      // bottomNavigationBar: Consumer<BottomProvider>(
-      //   builder: (context, provider, child) => CurvedNavigationBar(
-      //     key: provider.navigatorKey,
-      //     index: provider.selectedIndex,
-      //     items: provider.items,
-      //     onTap: provider.onItemTapped,
-      //   ),
-      // ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 5.0,
-        clipBehavior: Clip.antiAlias,
-        child: SizedBox(
-          height: kBottomNavigationBarHeight,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.home),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.shopping_bag),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CartPage()));
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.favorite_border_outlined),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => FavoritePage()));
-                },
-              ),
-               IconButton(
-                icon: const Icon(Icons.track_changes),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-//MyOrders
-                          builder: (context) => MyOrders()));
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.person),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ProfilePage()));
-                },
-              )
-            ],
-          ),
-        ),
-      ),
+      
 
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
-        title: Text(
-          'My Cart',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        title: Center(
+          child: Text(
+            'My Cart',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         elevation: 0,
@@ -109,161 +58,168 @@ class _CartPageState extends State<CartPage> {
             children: [
               // List view of cart
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: ListView.builder(
-                    itemCount: value.aabb?.data?.items?.length ?? 0,
-                    padding: EdgeInsets.all(12),
-                    itemBuilder: (context, index) {
-                      final item = value.aabb!.data!.items![index];
-                      return Stack(children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            height: 20.h,
-                            width: 270.w,
-                            decoration: BoxDecoration(
-                              // border: Border.all(),
-                              // color: Color.fromARGB(255, 187, 6, 6),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  height: 18.h,
-                                  width: 25.w,
-                                  decoration: BoxDecoration(
-                                      // color: Colors.cyan,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'http://$ip:3000/products-images/${item.product!.image}',
+                child: RefreshIndicator(
+                  color: Colors.blue,
+                  onRefresh: _refresh,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: ListView.builder(
+                      itemCount: value.aabb?.data?.items?.length ?? 0,
+                      padding: EdgeInsets.all(12),
+                      itemBuilder: (context, index) {
+                        final item = value.aabb!.data!.items![index];
+                        return Stack(children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              height: 20.h,
+                              width: 270.w,
+                              decoration: BoxDecoration(
+                                // border: Border.all(),
+                                // color: Color.fromARGB(255, 187, 6, 6),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    height: 18.h,
+                                    width: 25.w,
+                                    decoration: BoxDecoration(
+                                        // color: Colors.cyan,
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                              'http://$ip:3000/products-images/${item.product!.image}',
+                                            ),
+                                            fit: BoxFit.cover)),
+                                  ),
+                                  Positioned(
+                                    top: 15,
+                                    left: 120,
+                                    child: Text(
+                                      item.product?.name ?? '',
+                                      style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 40,
+                                    left: 120,
+                                    child: Text(
+                                      item.product!.price.toString(),
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 65,
+                                    left: 120,
+                                    child: Text(
+                                      item.product!.category.toString(),
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 20,
+                                    right: 10,
+                                    child: Consumer<CartItemPass>(
+                                      builder: (BuildContext context,
+                                          CartItemPass value, Widget? child) {
+                                        return IconButton(
+                                          onPressed: () {
+                                            value.removeItemFromCart(context,
+                                                item.product!.sId.toString());
+                                          },
+                                          icon: Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
                                           ),
-                                          fit: BoxFit.cover)),
-                                ),
-                                Positioned(
-                                  top: 15,
-                                  left: 120,
-                                  child: Text(
-                                    item.product?.name ?? '',
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 40,
-                                  left: 120,
-                                  child: Text(
-                                    item.product!.price.toString(),
-                                    style: const TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 65,
-                                  left: 120,
-                                  child: Text(
-                                    item.product!.category.toString(),
-                                    style: const TextStyle(fontSize: 18),
-                                  ),
-                                ),
-
-                                Positioned(
-                                  top: 20,
-                                  right: 10,
-                                  child: Consumer<CartItemPass>(
-                                    builder: (BuildContext context, CartItemPass value, Widget? child) {
-                                      return IconButton(
-                                                                  
-                                                         onPressed: () { 
-                                                          value.removeItemFromCart(context, item.product!.sId.toString());
-                                                          }, icon:Icon(Icons.delete, color: Colors.red,) ,
-                                    );
+                                        );
                                       },
-                                  
-                                  ),
-                                ),
-                                
-
-                     
-                         Positioned(
-                          bottom: 4.h,
-                          right: 2.w,
-                          child: Row(
-                            children: [
-                              Consumer<CartItemPass>(
-                                builder: (BuildContext context,
-                                    CartItemPass value, Widget? child) {
-                                  return InkWell(
-                                    onTap: () {
-                                      value.valueMinus(context,
-                                          item.product!.sId.toString());
-                                      Provider.of<CartGetCart>(context,
-                                              listen: false)
-                                          .fetchCart();
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey,
-                                        borderRadius:
-                                            BorderRadius.circular(4.sp),
-                                      ),
-                                      width: 5.w,
-                                      height: 4.h,
-                                      child: Icon(Icons.remove,
-                                          size: 14.sp, color: Colors.black),
                                     ),
-                                  );
-                                },
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 3.w, right: 3.w),
-                                child: Text(
-                                  item.quantity.toString(),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15.sp,
                                   ),
-                                ),
-                              ),
-                              Consumer<CartItemPass>(
-                                builder: (BuildContext context, value,
-                                    Widget? child) {
-                                  return InkWell(
-                                    onTap: () {
-                                      value.valueAdd(context,
-                                          item.product!.sId.toString());
-                                      Provider.of<CartGetCart>(context,
-                                              listen: false)
-                                          .fetchCart();
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius:
-                                            BorderRadius.circular(4.sp),
-                                      ),
-                                      width: 5.5.w,
-                                      height: 4.h,
-                                      child: Icon(Icons.add,
-                                          size: 14.sp, color: Colors.white),
+                                  Positioned(
+                                    bottom: 4.h,
+                                    right: 2.w,
+                                    child: Row(
+                                      children: [
+                                        Consumer<CartItemPass>(
+                                          builder: (BuildContext context,
+                                              CartItemPass value, Widget? child) {
+                                            return InkWell(
+                                              onTap: () {
+                                                value.valueMinus(context,
+                                                    item.product!.sId.toString());
+                                                Provider.of<CartGetCart>(context,
+                                                        listen: false)
+                                                    .fetchCart();
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey,
+                                                  borderRadius:
+                                                      BorderRadius.circular(4.sp),
+                                                ),
+                                                width: 5.w,
+                                                height: 4.h,
+                                                child: Icon(Icons.remove,
+                                                    size: 14.sp,
+                                                    color: Colors.black),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 3.w, right: 3.w),
+                                          child: Text(
+                                            item.quantity.toString(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15.sp,
+                                            ),
+                                          ),
+                                        ),
+                                        Consumer<CartItemPass>(
+                                          builder: (BuildContext context, value,
+                                              Widget? child) {
+                                            return InkWell(
+                                              onTap: () {
+                                                value.valueAdd(context,
+                                                    item.product!.sId.toString());
+                                                Provider.of<CartGetCart>(context,
+                                                        listen: false)
+                                                    .fetchCart();
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.circular(4.sp),
+                                                ),
+                                                width: 5.5.w,
+                                                height: 4.h,
+                                                child: Icon(Icons.add,
+                                                    size: 14.sp,
+                                                    color: Colors.white),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                },
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                        
-                              ],
                             ),
                           ),
-                        ),
-                      //  Divider()
-                      ]);
-                    },
+                          //  Divider()
+                        ]);
+                      },
+                    ),
                   ),
                 ),
               ),
-
 
               // total amount + pay now
 
@@ -287,8 +243,7 @@ class _CartPageState extends State<CartPage> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                          
-                            'Total price ${value.aabb!.total}',
+                  "Total Price :   ${value.aabb!.total}",
                             style: TextStyle(color: Colors.white),
                           ),
                         ],
